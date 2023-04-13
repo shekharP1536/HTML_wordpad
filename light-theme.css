@@ -1,0 +1,44 @@
+#toolbar {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f7f7f7;
+}
+
+#content {
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 400px;
+    margin-top: 10px;
+}
+
+button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button.active {
+    background-color: #ddd;
+}
+
+select {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.hidden{
+    display: none;
+}
+.hidden div{
+    width: 20px;
+    height: 20px;
+}
+.hidden div:hover{
+    scale: 1.2;
+    cursor: pointer;
+}
