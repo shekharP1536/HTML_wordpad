@@ -13,7 +13,16 @@
     padding: 10px;
     border: 1px solid gray;
   }
-
+  #content:focus{
+    outline: none;
+    box-shadow: 2px -3px 42px 11px rgba(202, 203, 240, 0.24);
+  }
+  option{
+    padding: 2px;
+  }
+  #toolbar button:hover{
+    background-color: rgba(134, 132, 132, 0.479);
+  }
 </style>
 
 <body class="default-theme">
@@ -43,6 +52,7 @@
   </div>
 </body>
 <script>
+  document.getElementById("content").focus();
 function showMessage(message) {
   var messageElement = document.getElementById('message');
   messageElement.innerHTML = message;
@@ -119,13 +129,13 @@ function showMessage(message) {
   });
 
   // Add font options to the fontSize and fontFamily select elements:
-  for (let i = 8; i <= 48; i += 2) {
+  for (let i = 8; i <= 60; i += 2) {
     const option = document.createElement("option");
     option.value = i;
     option.textContent = i + "pt";
     fontSize.appendChild(option);
   }
-  const fontOptions = ["Arial", "Verdana", "Tahoma", "sans-serif", "Helvetica"];
+  const fontOptions = ["Arial", "Verdana", "Tahoma", "sans-serif", "Helvetica", "system-ui", "cursive", "monospace", "fantasy", "ui-serif", "ui-rounded", "math", "emoji", "fangsong"];
   fontOptions.forEach(function (font) {
     const option = document.createElement("option");
     option.value = font;
