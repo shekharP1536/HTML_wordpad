@@ -57,3 +57,17 @@ select {
     transition: background-color .5s ease;
 }
 
+.message{
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    position: relative;
+    top: 2px;
+    background-color: rgb(87, 83, 83);
+    color: white;
+    padding: 5px;
+    display: none;
+    border-radius: 3px;
+    cursor: pointer;
+
+  }

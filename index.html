@@ -1,220 +1,138 @@
-
 <html>
 
 <head>
-    <title>Web Wordpad</title>
-    <link id="theme-link" rel="stylesheet" href="default-theme.css">
-    <script src="script.js"></script>
+  <title>Web Wordpad</title>
+  <link id="theme-link" rel="stylesheet" href="default-theme.css">
+  <script src="script.js"></script>
 
 </head>
 <style>
-    #content {
-        height: 700px;
-        padding: 10px;
-        border: 1px solid gray;
-    }
+  #content {
+    height: 87%;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid gray;
+  }
+
 </style>
 
 <body class="default-theme">
-    <div id="toolbar">
-        <button id="bold">Bold</button>
-        <button id="italic">Italic</button>
-        <button id="underline">Underline</button>
-        <button id="alignLeft">Align Left</button>
-        <button id="alignCenter">Align Center</button>
-        <button id="alignRight">Align Right</button>
-        <button id="bulletedList">Bulleted List</button>
-        <button id="numberedList">Numbered List</button>
-        <select id="fontSize"></select>
-        <select id="fontFamily"></select>
-        <button id="color">Color</button>
-        <div id="colorPicker" class="hidden"></div>
-        <select id="theme-selector">
-            <option value="default-theme">Default Theme</option>
-            <option value="dark-theme">Dark Theme</option>
-            <option value="light-theme">Light Theme</option>
-          </select>
-          
-    </div>
-    <div id="content" contenteditable="true"></div>
+  <div id="toolbar">
+    <button id="bold">Bold</button>
+    <button id="italic">Italic</button>
+    <button id="underline">Underline</button>
+    <button id="alignLeft">Align Left</button>
+    <button id="alignCenter">Align Center</button>
+    <button id="alignRight">Align Right</button>
+    <button id="bulletedList">Bulleted List</button>
+    <button id="numberedList">Numbered List</button>
+    <select id="fontSize"></select>
+    <select id="fontFamily"></select>
+    <button id="color">Color</button>
+    <div id="colorPicker" class="hidden"></div>
+    <select id="theme-selector">
+      <option value="default-theme">Default Theme</option>
+      <option value="dark-theme">Dark Theme</option>
+      <option value="light-theme">Light Theme</option>
+    </select>
+
+  </div>
+  <div id="content" contenteditable="true"></div>
+  <div class="message" id="message">
+    Hello
+  </div>
 </body>
 <script>
-
-    document.getElementById("theme-selector").addEventListener("change", switchTheme)
-        function switchTheme(theme) {
-  const themeLink = document.getElementById("theme-link");
-  themeLink.href = `${theme}.css`;
-  localStorage.setItem("theme", theme);
+function showMessage(message) {
+  var messageElement = document.getElementById('message');
+  messageElement.innerHTML = message;
+  messageElement.style.display = "block";
+  setTimeout(function () {
+    messageElement.innerHTML = '';
+    messageElement.style.display = "none";
+  }, 2000);
 }
-const themeSelector = document.getElementById("theme-selector");
-themeSelector.addEventListener("change", () => switchTheme(themeSelector.value));
-themeSelector.value = "default-theme";
-switchTheme(themeSelector.value);
 
-    const content = document.getElementById("content");
-    const boldButton = document.getElementById("bold");
-    const italicButton = document.getElementById("italic");
-    const underlineButton = document.getElementById("underline");
-    const alignLeftButton = document.getElementById("alignLeft");
-    const alignCenterButton = document.getElementById("alignCenter");
-    const alignRightButton = document.getElementById("alignRight");
-    const bulletedListButton = document.getElementById("bulletedList");
-    const numberedListButton = document.getElementById("numberedList");
-    const fontSize = document.getElementById("fontSize");
-    const fontFamily = document.getElementById("fontFamily");
-    const buttons = [boldButton, italicButton, underlineButton, alignLeftButton, alignCenterButton, alignRightButton, bulletedListButton, numberedListButton];
-const commands = ["bold", "italic", "underline", "justifyLeft", "justifyCenter", "justifyRight", "insertUnorderedList", "insertOrderedList"];
+  document.getElementById("theme-selector").addEventListener("change", switchTheme)
+  function switchTheme(theme) {
+    const themeLink = document.getElementById("theme-link");
+    themeLink.href = `${theme}.css`;
+    showMessage(`${theme}`);
+    localStorage.setItem("theme", theme);
+  }
+  const themeSelector = document.getElementById("theme-selector");
+  themeSelector.addEventListener("change", () => switchTheme(themeSelector.value));
+  themeSelector.value = "default-theme";
+  switchTheme(themeSelector.value);
 
-for (let i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener("click", () => {
-    document.execCommand(commands[i], false, null);
-    if (document.queryCommandState(commands[i])) {
-      buttons[i].classList.add("active");
-    } else {
-      buttons[i].classList.remove("active");
-    }
+  const content = document.getElementById("content");
+  const boldButton = document.getElementById("bold");
+  const italicButton = document.getElementById("italic");
+  const underlineButton = document.getElementById("underline");
+  const alignLeftButton = document.getElementById("alignLeft");
+  const alignCenterButton = document.getElementById("alignCenter");
+  const alignRightButton = document.getElementById("alignRight");
+  const bulletedListButton = document.getElementById("bulletedList");
+  const numberedListButton = document.getElementById("numberedList");
+  const fontSize = document.getElementById("fontSize");
+  const fontFamily = document.getElementById("fontFamily");
+  const buttons = [boldButton, italicButton, underlineButton, alignLeftButton, alignCenterButton, alignRightButton, bulletedListButton, numberedListButton];
+  const commands = ["bold", "italic", "underline", "justifyLeft", "justifyCenter", "justifyRight", "insertUnorderedList", "insertOrderedList"];
+
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener("click", () => {
+      document.execCommand(commands[i], false, null);
+    });
+  }
+
+
+
+  fontSize.addEventListener("change", () => document.execCommand("fontSize", false, fontSize.value));
+  fontFamily.addEventListener("change", () => document.execCommand("fontName", false, fontFamily.value));
+
+  const colorButton = document.getElementById("color");
+  const colorPicker = document.getElementById("colorPicker");
+  const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "purple"];
+
+  // colorButton.addEventListener("click", () => {
+  //   if (colorPicker.style.display === "flex") {
+  //     colorPicker.style.display = "none";
+  //   } else {
+  //     colorPicker.style.display = "none";
+  //   }
+  // });
+  colors.forEach(function (color) {
+    var colorOption = document.createElement("div");
+    colorOption.classList.add("color-option");
+    colorOption.style.backgroundColor = color;
+    colorOption.addEventListener("click", () => {
+      document.execCommand("foreColor", false, color);
+      console.log(color);
+      alert(color)
+    });
+    colorPicker.appendChild(colorOption);
   });
-}
-
-
-
-    fontSize.addEventListener("change", () => document.execCommand("fontSize", false, fontSize.value));
-    fontFamily.addEventListener("change", () => document.execCommand("fontName", false, fontFamily.value));
-
-    const colorButton = document.getElementById("color");
-    const colorPicker = document.getElementById("colorPicker");
-    const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "purple"];
-
-    colorButton.addEventListener("click", () => {
-    if(colorPicker.style.display === "flex"){
-    colorPicker.style.display = "none";
-    }else{
-    colorPicker.style.display = "flex";
-    }
-});
-
-    // Create color options in the color picker
-    colors.forEach(function (color) {
-        const colorOption = document.createElement("div");
-        colorOption.classList.add("color-option");
-        colorOption.style.backgroundColor = color;
-        colorOption.addEventListener("click", () => {
-        document.execCommand("foreColor", false, color);
-        console.log(color)
-            // colorPicker.classList.add("hidden");
-        });
-        colorPicker.appendChild(colorOption);
-    });
-    colorButton.addEventListener("click", () => {
-    const color = window.prompt("Enter a color (e.g. red, #ff0000)");
+  colorButton.addEventListener("click", function res() {
+    var color = prompt("Enter color here");
+    console.log(color);
     document.execCommand("foreColor", false, color);
-});
+  });
 
-    // Add font options to the fontSize and fontFamily select elements:
-    for (let i = 8; i <= 48; i += 2) {
-        const option = document.createElement("option");
-        option.value = i;
-        option.textContent = i + "pt";
-        fontSize.appendChild(option);
-    }
-    const fontOptions = ["Arial", "Verdana", "Tahoma", "sans-serif", "Helvetica"];
-    fontOptions.forEach(function (font) {
-        const option = document.createElement("option");
-        option.value = font;
-        option.textContent = font;
-        fontFamily.appendChild(option);
-    });  
-content.addEventListener("input" ,changeColorOfWords);
-
-changeColorOfWords(["dog","cat","color"], "red");
-
-function changeColorOfWords(matchWords, color) {
-    let textNodes = [];
-    matchWords = Array.isArray(matchWords)? matchWords : [matchWords];
-    function findTextNodes(node) {
-        for (let i = 0; i < node.childNodes.length; i++) {
-            let childNode = node.childNodes[i];
-            if (childNode.nodeType === Node.TEXT_NODE) {
-                textNodes.push(childNode);
-            } else {
-                findTextNodes(childNode);
-            }
-        }
-    }
-    findTextNodes(content);
-    textNodes.forEach(textNode => {
-        matchWords.forEach(word => {
-            let re = new RegExp(`\\b${word}\\b`, 'gi');
-            textNode.textContent = textNode.textContent.replace(re, `<span style="color: ${color};">${word}</span>`);
-        });
-    });
-}
-
+  // Add font options to the fontSize and fontFamily select elements:
+  for (let i = 8; i <= 48; i += 2) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = i + "pt";
+    fontSize.appendChild(option);
+  }
+  const fontOptions = ["Arial", "Verdana", "Tahoma", "sans-serif", "Helvetica"];
+  fontOptions.forEach(function (font) {
+    const option = document.createElement("option");
+    option.value = font;
+    option.textContent = font;
+    fontFamily.appendChild(option);
+  });
 
 </script>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-<!DOCTYPE html>
-<html>
-<head>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  
-  <style>
-    .highlight {
-    color: yellow;
-    }
-  </style>
-</head>
-<body>        
-  <div id="editable-div" contenteditable="true"></div>
-</body>
-<script>
-    // Define the keywords to match
-    var keywords = ["dog", "cat", "mat", "rat"];
-
-    $(document).ready(function() {
-      // Listen for changes to the content of the editable div
-      $("#editable-div").on("input", function() {
-        // Get the current contents of the div
-        var text = $(this).text();
-
-        // Loop through the keywords
-        for (var i = 0; i < keywords.length; i++) {
-          var keyword = keywords[i];
-
-          // Check if the keyword is present in the text
-          if (text.indexOf(keyword) !== -1) {
-            // Replace the keyword with a span containing the keyword
-            var replace = "<span class='highlight'>" + keyword + "</span>";
-            text = text.replace(new RegExp(keyword, "gi"), replace);
-          }
-        }
-
-        // Update the contents of the div with the new text
-        $(this).html(text);
-      });
-    });
-  </script>
-</html> -->
